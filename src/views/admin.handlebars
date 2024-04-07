@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="/css/admin.css">
+<div class="container-fluid pt-3">
+  <table class="table table-borderless align-middle table-hover text-center">
+    <thead class="table-dark">
+      <tr id="ths">
+        <th style="width: 1%;">Mã Sản Phẩm</th>
+        <th style="width: 10%;">Tên Sản Phẩm</th>
+        <th style="width: 48%;">Mô Tả</th>
+        <th style="width: 10%;">Giá Tiền</th>
+        <th style="width: 10%;">Hình Ảnh</th>
+        <th style="width: 11%;">Danh Mục</th>
+        <th style="width: 10%;">Hành Động</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each products}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{description}}</td>
+        <td>{{formatPrice price}}</td>
+        <td><img src="/uploads/{{image}}" data-image="{{image}}"></td>
+        <td>{{catalog}}</td>
+        <td>
+          <button onclick="showUpdateModal(this)" class="btn btn-link p-1 btn-sm btn-rounded text-dark">Sửa</button>
+          <button onclick="showDeleteModal({{id}})" class="btn btn-link p-1 btn-sm btn-rounded text-dark">Xóa</button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+{{!-- Cập nhật sản phẩm --}}
+<div class="modal fade" id="updateModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Cập nhật sản phẩm</h4>
+        <button type="button" class="close" onclick="closeUpdateModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" id="modal-body-update">
+        <input type="hidden" name="id" id="id">
+
+        <div class="form-outline mb-2">
+          <input name="name" type="text" id="name" class="form-control" />
+          <label class="form-label" for="name">Tên sản phẩm</label>
+        </div>
+
+        <div class="form-outline mb-2">
+          <textarea class="form-control" id="description" rows="8"></textarea>
+          <label class="form-label" for="description">Mô tả</label>
+        </div>
+
+        <div class="form-outline mb-2">
+          <input type="number" id="price" class="form-control" min="1" />
+          <label class="form-label" for="price">Giá tiền</label>
+        </div>
+
+        <div class="custom-file mb-2">
+          <input type="file" class="custom-file-input" id="image" accept="image/*">
+          <label class="custom-file-label" for="image">Upload ảnh</label>
+        </div>
+
+        <select class="mb-2 custom-select" name="catalog" id="catalog">
+          <option value="Đèn thông minh">Đèn thông minh</option>
+          <option value="Cảm biến">Cảm biến</option>
+          <option value="Công tắc thông minh">Công tắc thông minh</option>
+          <option value="Bộ rèm cửa">Bộ rèm cửa</option>
+          <option value="Phụ kiện">Phụ kiện</option>
+          <option value="Khác">Khác</option>
+        </select>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal" onclick="handleUpdate()">Cập nhật</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeUpdateModal()">Đóng</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{{!-- Xóa sản phẩm --}}
+<div class="modal fade" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Xóa sản phẩm</h4>
+        <button type="button" class="close" onclick="closeDeleteModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" id="modal-body-delete">
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal" onclick="handleDelete()">Xóa</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeDeleteModal()">Đóng</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="/js/admin.js"></script>
